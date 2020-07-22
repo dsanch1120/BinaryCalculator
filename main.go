@@ -42,14 +42,77 @@ func CallClear() {
 	}
 }
 
+//Gets binary strings
+func getStrings(ind int) string {
+	if ind == 1 {
+		fmt.Println("Enter First Binary String")
+	} else if ind == 2 {
+		fmt.Println("Enter Second Binary String")
+	} else {
+		return ""
+	}
+	for {
+		reader := bufio.NewReader(os.Stdin)
+
+		//Gets user's input
+		temp, _ := reader.ReadString('\n')
+		temp = strings.Replace(temp, "\n", "", -1)
+
+		for i := 0; i < len(temp); i++ {
+			if temp[i] != '0' && temp[i] != '1' {
+				break
+			}
+
+			if i == len(temp) - 1 {
+				CallClear()
+				return temp
+			}
+		}
+
+		//Clears terminal for readability and displays updated message to user
+		CallClear()
+		fmt.Println(temp + " is not a Valid Input!")
+		fmt.Println("Enter an unsigned Binary number")
+		fmt.Println()
+	}
+
+}
+
 //Calculates for unsigned binary
 func unsigned() {
-	fmt.Println("Unsigned")
+	//Message to be displayed at top
+	CallClear()
+	if addition {
+		fmt.Println("Unsigned Binary Addition")
+	} else {
+		fmt.Println("Unsigned Binary Subtraction")
+	}
+
+	fmt.Println()
+
+	bin1 := getStrings(1)
+	bin2 := getStrings(2)
+
+	fmt.Println(bin1)
+	fmt.Println(bin2)
 }
 
 //Calculates for signed binary
 func signed() {
-	fmt.Println("Signed")
+	CallClear()
+	if addition {
+		fmt.Println("Signed Binary Addition")
+	} else {
+		fmt.Println("Signed Binary Subtraction")
+	}
+
+	fmt.Println()
+
+	bin1 := getStrings(1)
+	bin2 := getStrings(2)
+
+	fmt.Println(bin1)
+	fmt.Println(bin2)
 }
 
 //Allows the user to choose their conditions
@@ -59,7 +122,7 @@ func menu() {
 	var temp int
 	var err error
 	var funcCall map[int]func()
-	funcCall = make(map[int]func())		//Allocated funcCall
+	funcCall = make(map[int]func()) //Allocated funcCall
 	//Has funcCall call the various functions depending on the user's input
 	funcCall[1] = func() {
 		unsigned()
@@ -67,7 +130,6 @@ func menu() {
 	funcCall[2] = func() {
 		signed()
 	}
-
 
 	//Displays welcome message and prompts user to choose between addition and subtraction
 	fmt.Println("Welcome to the Binary Calculator")
