@@ -19,6 +19,16 @@ import (
 var clear map[string]func()
 var addition bool
 
+func pow(base int, exp int) int{
+	output := 1
+	for exp != 0 {
+		output *= base
+		exp -= 1
+	}
+
+	return output;
+}
+
 //Allows the program to clear the terminal in Windows and Unix operating systems
 func init() {
 	clear = make(map[string]func())
@@ -78,6 +88,29 @@ func getStrings(ind int) string {
 
 }
 
+func decimalToBinary(num int, option int) string{
+	var bin []int
+	switch option {
+	case 1:				//Unsigned binary
+		for {
+			if num <= 0 {
+				break
+			}
+			bin = append(bin, num%2)
+			num = num / 2
+		}
+	}
+	output := ""
+	for i := len(bin) - 1; i >= 0; i-- {
+		if bin[i] == 1 {
+			output += string('1')
+		} else {
+			output += string('0')
+		}
+	}
+	return output
+}
+
 //Calculates for unsigned binary
 func unsigned() {
 	//Message to be displayed at top
@@ -93,8 +126,34 @@ func unsigned() {
 	bin1 := getStrings(1)
 	bin2 := getStrings(2)
 
-	fmt.Println(bin1)
-	fmt.Println(bin2)
+	bitCounter := 0
+	dec := 0
+	val1 := 0
+	val2 := 0
+
+	for i := len(bin1) - 1; i >= 0; i-- {
+		if bin1[i] == '1' {
+			val1 += pow(2, bitCounter)
+		}
+		bitCounter++
+	}
+	bitCounter = 0
+	for i := len(bin2) - 1; i >= 0; i-- {
+		if bin2[i] == '1' {
+			val2 += pow(2, bitCounter)
+		}
+		bitCounter++
+	}
+
+	if addition {
+		dec = val1 + val2
+	} else {
+		dec = val1 - val2
+	}
+
+	output := decimalToBinary(dec, 1)
+
+	fmt.Println(output)
 }
 
 //Calculates for signed binary
