@@ -99,6 +99,9 @@ func decimalToBinary(num int, option int) string{
 			bin = append(bin, num%2)
 			num = num / 2
 		}
+		if len(bin) == 0 {
+			return "000"
+		}
 	}
 	output := ""
 	for i := len(bin) - 1; i >= 0; i-- {
@@ -108,6 +111,7 @@ func decimalToBinary(num int, option int) string{
 			output += string('0')
 		}
 	}
+
 	return output
 }
 
